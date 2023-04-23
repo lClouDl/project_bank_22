@@ -14,13 +14,30 @@ management:
         include: '*'
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/postgres
-    username: user
-    password: password
+    url: jdbc:postgresql://localhost:5433/postgres
+    username: postgres
+    password: secretpassword
   liquibase:
-    default-schema: account
+    enabled: true
     change-log: db.changelog/db.changelog-master.yaml
-    enabled: ${LIQUIBASE_ENABLED:true}
-    drop-first: ${LIQUIBASE_DROP_FIRST:false}
+    default-schema: account
+    drop-first: false
   application:
     name: account-app
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+logging:
+  level:
+    org.springframework.web: ERROR
+    com.bank: info
+#Ограничить запись в файл и вывод на экран из root до log.error
+#    root: error
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+  file:
+    name: account/src/main/resources/logAccount.log
+#    path: account/src/main/resources/
+
