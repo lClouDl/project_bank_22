@@ -3,6 +3,7 @@ package com.bank.account.services;
 import com.bank.account.exceptions.AuditNotFoundException;
 import com.bank.account.models.Audit;
 import com.bank.account.repositories.AuditRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,20 +14,12 @@ import java.util.List;
  * Реализует интерфейс {@link AuditService}
  * Описывает CRUD-операции над сущностью {@link Audit}
  */
+@AllArgsConstructor
 @Service
 @Transactional(readOnly = true)
 public class AuditServiceImpl implements AuditService {
 
     private final AuditRepository auditRepository;
-
-    /**
-     * Конструктор - создание объекта {@link AuditServiceImpl}
-     * Так же необходим для внедрения зависимости (репозитория)
-     * @param auditRepository интерфейс репозитория для работы с {@link org.springframework.data.jpa.repository.JpaRepository}
-     */
-    public AuditServiceImpl(AuditRepository auditRepository) {
-        this.auditRepository = auditRepository;
-    }
 
     /**{@link AuditService#findAll()}*/
     @Override

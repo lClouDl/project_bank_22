@@ -11,12 +11,12 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: secretpassword
 
-  test-bank-db:
-    image: postgres
-    hostname: test-bank-db
-    ports:
-      - 5434:5432
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: secretpassword
+#  test-bank-db:
+#    image: postgres
+#    hostname: test-bank-db
+#    ports:
+#      - 5434:5432
+#    environment:
+#      POSTGRES_USER: postgres
+#      POSTGRES_PASSWORD: secretpassword
 

@@ -8,9 +8,9 @@ import com.bank.account.services.AuditService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -25,12 +25,11 @@ import java.util.stream.Collectors;
  * Класс-контроллер для аудита. Позволяет производить CRUD-операции над записями для аудирования
  */
 @RestController
+@Slf4j
+@AllArgsConstructor
 @Tag(name="Контроллер аудита", description="Позволяет производить CRUD операции над данными аудирования")
 @RequestMapping("/audit")
 public class AuditRestController {
-
-    /** Поле с логгером */
-    static final Logger LOGGER = LoggerFactory.getLogger(AccountApplication.class);
 
     /**
      * Поле для внедрения сервиса для сущности AuditService
@@ -43,16 +42,6 @@ public class AuditRestController {
      * @see AccountApplication#modelMapper()
      */
     private final ModelMapper modelMapper;
-
-    /**
-     * Конструктор для создания объекта класса AuditRestController
-     * @param auditService объект класса сервиса для сущности Audit
-     * @param modelMapper маппер для работы с DTO
-     */
-    public AuditRestController(AuditService auditService, ModelMapper modelMapper) {
-        this.auditService = auditService;
-        this.modelMapper = modelMapper;
-    }
 
     /**
      * Метод, который предоставляет информацию обо всех записях аудирования
@@ -81,7 +70,7 @@ public class AuditRestController {
     public AuditDTO getAudit(@PathVariable("id") @Parameter(description = "Идентификатор аудита") int id) {
 
         AuditDTO auditDTO = convertToAuditDTO(auditService.findOne(id));
-        LOGGER.info("Поиск записи аудирования с id: {} выполнен успешно.", id);
+        log.info("Поиск записи аудирования с id: {} выполнен успешно.", id);
         return auditDTO;
     }
 
@@ -110,7 +99,7 @@ public class AuditRestController {
         }
 
         auditService.save(convertToAudit(auditDTO));
-        LOGGER.info("Добавление записи аудирования с id: {} выполнен успешно.", auditDTO.getId());
+        log.info("Добавление записи аудирования с id: {} выполнен успешно.", auditDTO.getId());
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
@@ -142,7 +131,7 @@ public class AuditRestController {
         Audit audit = convertToAudit(auditDTO);
         audit.setId(id);
         auditService.update(id, audit);
-        LOGGER.info("Обновление записи аудирования с id: {} выполнено успешно.", id);
+        log.info("Обновление записи аудирования с id: {} выполнено успешно.", id);
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
@@ -158,6 +147,7 @@ public class AuditRestController {
     @DeleteMapping("/{id}")
     private ResponseEntity<HttpStatus> delete(@PathVariable("id") @Parameter(description = "Идентификатор аудита для удаления") int id) {
         auditService.delete(id);
+        log.info("Удаление записи аудирования с id: {} выполнено успешно.", id);
         return ResponseEntity.ok(HttpStatus.OK);
     }
 

@@ -27,6 +27,9 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
+  cloud:
+    loadbalancer:
+      enabled: false
 
 logging:
   level:
@@ -41,3 +44,7 @@ logging:
     name: account/src/main/resources/logAccount.log
 #    path: account/src/main/resources/
 
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8081/eureka

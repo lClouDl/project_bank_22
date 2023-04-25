@@ -8,7 +8,6 @@ import org.hibernate.envers.RevisionListener;
 import org.hibernate.envers.RevisionType;
 import org.hibernate.envers.query.AuditQuery;
 import org.springframework.transaction.annotation.Transactional;
-
 import javax.persistence.EntityManager;
 import java.time.Instant;
 import java.time.ZoneId;
@@ -57,7 +56,7 @@ public class AuditListener implements RevisionListener {
 
             audit.setModifiedAt(zonedDateTimeOfRevision);
             audit.setModifiedBy(revInfo.getUsername());
-            audit.setEntityJson(((AccountDetails) resultList.get(resultList.size() - 2)[0]).toString());
+            audit.setEntityJson((resultList.get(resultList.size() - 2)[0]).toString());
         } else {
             audit.setEntityJson(modifyAccountDetails.toString());
         }
@@ -66,18 +65,5 @@ public class AuditListener implements RevisionListener {
         audit.setRevInfo(revInfo);
         entityManager.persist(audit);
         revInfo.setAudit(audit);
-
-//        System.out.println("------------------------");
-//        System.out.println("Audit: " + revInfo.getAudit().toString());
-//        System.out.println("Audit id: " + revInfo.getAudit().getId());
-//        System.out.println("Audit entity type: " + revInfo.getAudit().getEntityType());
-//        System.out.println("Audit operation type: " + revInfo.getAudit().getOperationType());
-//        System.out.println("Audit кто создал: " + revInfo.getAudit().getCreatedBy());
-//        System.out.println("Audit кто изменил: " + revInfo.getAudit().getModifiedBy());
-//        System.out.println("Audit когда создан: " + revInfo.getAudit().getCreatedAt());
-//        System.out.println("Audit когда изменен: " + revInfo.getAudit().getModifiedAt());
-//        System.out.println("Audit после изменения: " + revInfo.getAudit().getNewEntityJson());
-//        System.out.println("Audit до изменения: " + revInfo.getAudit().getEntityJson());
-//        System.out.println("------------------------");
     }
 }

@@ -1,11 +1,9 @@
 package com.bank.account.handler;
 
-import com.bank.account.AccountApplication;
 import com.bank.account.exceptions.*;
 import com.bank.account.util.AccountDetailsErrorResponse;
 import com.bank.account.util.AuditErrorResponse;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -16,10 +14,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
  * Отлавливает кастомные исключения во всех контроллерах
  */
 @ControllerAdvice
+@Slf4j
 public class handlerAdvice {
-
-    /** Поле с логгером */
-    static final Logger LOGGER = LoggerFactory.getLogger(AccountApplication.class);
 
     /**
      * Метод, отлавливает исключение {@link AccountDetailsNotFoundException}
@@ -33,7 +29,7 @@ public class handlerAdvice {
                 System.currentTimeMillis()
         );
 
-        LOGGER.error("При поиске аккаунта произошла ошибка: {}", response.getMessage());
+        log.error("При поиске аккаунта произошла ошибка: {}", response.getMessage());
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
 
@@ -49,7 +45,7 @@ public class handlerAdvice {
                 System.currentTimeMillis()
         );
 
-        LOGGER.error(response.getMessage());
+        log.error(response.getMessage());
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
@@ -65,7 +61,7 @@ public class handlerAdvice {
                 System.currentTimeMillis()
         );
 
-        LOGGER.error(response.getMessage());
+        log.error(response.getMessage());
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
@@ -81,7 +77,7 @@ public class handlerAdvice {
                 System.currentTimeMillis()
         );
 
-        LOGGER.error("При обновлении аккаунта произошла ошибка: {}", response.getMessage());
+        log.error("При обновлении аккаунта произошла ошибка: {}", response.getMessage());
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
 
@@ -97,7 +93,7 @@ public class handlerAdvice {
                 System.currentTimeMillis()
         );
 
-        LOGGER.error("При поиске записи аудирования произошла ошибка: {}", response.getMessage());
+        log.error("При поиске записи аудирования произошла ошибка: {}", response.getMessage());
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
 
@@ -113,7 +109,7 @@ public class handlerAdvice {
                 System.currentTimeMillis()
         );
 
-        LOGGER.error(response.getMessage());
+        log.error(response.getMessage());
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
@@ -129,7 +125,7 @@ public class handlerAdvice {
                 System.currentTimeMillis()
         );
 
-        LOGGER.error(response.getMessage());
+        log.error(response.getMessage());
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 }

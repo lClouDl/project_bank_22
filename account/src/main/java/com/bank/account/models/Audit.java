@@ -12,11 +12,12 @@ import java.time.ZonedDateTime;
 /**
  * Класс-сущность для записей аудирования
  */
-@Entity
-@Getter
-@Setter
+@Data
+@EqualsAndHashCode(exclude = "revInfo")
+@ToString(exclude = "revInfo")
 @NoArgsConstructor
 @AllArgsConstructor
+@Entity
 @Table(name = "audit", schema = "account")
 public class Audit {
 

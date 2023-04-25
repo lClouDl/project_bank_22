@@ -1,8 +1,9 @@
 package com.bank.account.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
@@ -15,9 +16,10 @@ import javax.validation.constraints.Size;
 /**
  * Класс слоя DTO для сущности аудита
  */
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Schema(description = "Сущность записей аудирования")
-@Getter
-@Setter
 public class AuditDTO {
 
     /** Идентификационный номер записи аудирования */

@@ -11,9 +11,9 @@ import com.bank.account.services.AccountDetailsService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -28,11 +28,10 @@ import java.util.stream.Collectors;
  * Класс-контроллер для аккаунта. Позволяет производить CRUD-операции над аккаунтом
  */
 @RestController
+@Slf4j
+@AllArgsConstructor
 @Tag(name="Контроллер аккаунта", description="Позволяет производить CRUD операции над аккаунтами")
 public class AccountDetailsRestController {
-
-    /** Поле с логгером */
-    static final Logger LOGGER = LoggerFactory.getLogger(AccountApplication.class);
 
     /**
      * Поле для внедрения сервиса для сущности AccountDetails
@@ -45,16 +44,6 @@ public class AccountDetailsRestController {
      * @see AccountApplication#modelMapper()
      */
     private final ModelMapper modelMapper;
-
-    /**
-     * Конструктор для создания объекта класса AccountDetailsRestController
-     * @param accountDetailsService объект класса сервиса для сущности AccountDetails
-     * @param modelMapper маппер для работы с DTO
-     */
-    public AccountDetailsRestController(AccountDetailsService accountDetailsService, ModelMapper modelMapper) {
-        this.accountDetailsService = accountDetailsService;
-        this.modelMapper = modelMapper;
-    }
 
     /**
      * Метод, который предоставляет информацию обо всех аккаунтах
@@ -82,7 +71,7 @@ public class AccountDetailsRestController {
     @GetMapping("/{id}")
     public AccountDetailsDTO getAccountDetails(@PathVariable("id") @Parameter(description = "Идентификатор аккаунта") int id) {
         AccountDetailsDTO accountDetailsDTO = convertToAccountDetailsDTO(accountDetailsService.findOne(id));
-        LOGGER.info("Поиск аккаунта с id: {} выполнен успешно.", id);
+        log.info("Поиск аккаунта с id: {} выполнен успешно.", id);
         return accountDetailsDTO;
     }
 
@@ -111,7 +100,7 @@ public class AccountDetailsRestController {
         }
 
         accountDetailsService.save(convertToAccountDetails(accountDetailsDTO));
-        LOGGER.info("Добавление аккаунта с номером: {} выполнен успешно.", accountDetailsDTO.getAccountNumber());
+        log.info("Добавление аккаунта с номером: {} выполнен успешно.", accountDetailsDTO.getAccountNumber());
 
         return ResponseEntity.ok(HttpStatus.OK);
     }
@@ -143,7 +132,7 @@ public class AccountDetailsRestController {
 
         AccountDetails accountDetails = convertToAccountDetails(accountDetailsDTO);
         accountDetailsService.update(id, accountDetails);
-        LOGGER.info("Обновление аккаунта с номером: {} выполнено успешно.", accountDetailsDTO.getAccountNumber());
+        log.info("Обновление аккаунта с номером: {} выполнено успешно.", accountDetailsDTO.getAccountNumber());
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
@@ -159,6 +148,7 @@ public class AccountDetailsRestController {
     @DeleteMapping("/{id}")
     public ResponseEntity<HttpStatus> delete(@PathVariable("id") @Parameter(description = "Идентификатор аккаунта для удаления") int id) {
         accountDetailsService.delete(id);
+        log.info("Удаление аккаунта с id: {} выполнено успешно.", id);
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
