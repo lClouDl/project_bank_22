@@ -116,7 +116,7 @@ public class AuditRestController {
             description = "Позволяет обновить и сохранить в бд запись аудирования с переданным id"
     )
     @PatchMapping("/{id}")
-    private ResponseEntity<HttpStatus> update(@RequestBody @Valid AuditDTO auditDTO, @Parameter(description = "Данные об ошибках валидации") BindingResult bindingResult, @PathVariable("id") @Parameter(description = "Идентификатор записи аудирования, в которой нужно произвести обновление") int id) {
+    public ResponseEntity<HttpStatus> update(@RequestBody @Valid AuditDTO auditDTO, @Parameter(description = "Данные об ошибках валидации") BindingResult bindingResult, @PathVariable("id") @Parameter(description = "Идентификатор записи аудирования, в которой нужно произвести обновление") int id) {
         if (bindingResult.hasErrors()) {
             StringBuilder errorMsg = new StringBuilder();
             List<FieldError> errors = bindingResult.getFieldErrors();
@@ -145,7 +145,7 @@ public class AuditRestController {
             description = "Позволяет удалить запись аудирования с указанным id"
     )
     @DeleteMapping("/{id}")
-    private ResponseEntity<HttpStatus> delete(@PathVariable("id") @Parameter(description = "Идентификатор аудита для удаления") int id) {
+    public ResponseEntity<HttpStatus> delete(@PathVariable("id") @Parameter(description = "Идентификатор аудита для удаления") int id) {
         auditService.delete(id);
         log.info("Удаление записи аудирования с id: {} выполнено успешно.", id);
         return ResponseEntity.ok(HttpStatus.OK);

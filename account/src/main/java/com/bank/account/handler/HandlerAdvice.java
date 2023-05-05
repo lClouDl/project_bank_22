@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
  */
 @ControllerAdvice
 @Slf4j
-public class handlerAdvice {
+public class HandlerAdvice {
 
     /**
      * Метод, отлавливает исключение {@link AccountDetailsNotFoundException}
@@ -23,7 +23,7 @@ public class handlerAdvice {
      * @return объект типа {@link ResponseEntity}, в теле которого содержится объект класса {@link AccountDetailsErrorResponse} и HTTP статус NOT_FOUND
      */
     @ExceptionHandler
-    private ResponseEntity<AccountDetailsErrorResponse> handleException (AccountDetailsNotFoundException e) {
+    public ResponseEntity<AccountDetailsErrorResponse> handleException (AccountDetailsNotFoundException e) {
         AccountDetailsErrorResponse response = new AccountDetailsErrorResponse(
                 "Аккаунт с таким id не найден!",
                 System.currentTimeMillis()
@@ -39,7 +39,7 @@ public class handlerAdvice {
      * @return объект типа {@link ResponseEntity}, в теле которого содержится объект класса {@link AccountDetailsErrorResponse} и HTTP статус BAD_REQUEST
      */
     @ExceptionHandler
-    private ResponseEntity<AccountDetailsErrorResponse> handleException (AccountDetailsNotCreatedException e) {
+    public ResponseEntity<AccountDetailsErrorResponse> handleException (AccountDetailsNotCreatedException e) {
         AccountDetailsErrorResponse response = new AccountDetailsErrorResponse(
                 e.getMessage(),
                 System.currentTimeMillis()
@@ -55,7 +55,7 @@ public class handlerAdvice {
      * @return объект типа {@link ResponseEntity}, в теле которого содержится объект класса {@link AccountDetailsErrorResponse} и HTTP статус NOT_FOUND
      */
     @ExceptionHandler
-    private ResponseEntity<AccountDetailsErrorResponse> handleException (AccountDetailsNotUpdateException e) {
+    public ResponseEntity<AccountDetailsErrorResponse> handleException (AccountDetailsNotUpdateException e) {
         AccountDetailsErrorResponse response = new AccountDetailsErrorResponse(
                 e.getMessage(),
                 System.currentTimeMillis()
@@ -71,7 +71,7 @@ public class handlerAdvice {
      * @return объект типа {@link ResponseEntity}, в теле которого содержится объект класса {@link AccountDetailsErrorResponse} и HTTP статус NOT_FOUND
      */
     @ExceptionHandler
-    private ResponseEntity<AccountDetailsErrorResponse> handleException (AccountDetailsNotFoundForUpdateException e) {
+    public ResponseEntity<AccountDetailsErrorResponse> handleException (AccountDetailsNotFoundForUpdateException e) {
         AccountDetailsErrorResponse response = new AccountDetailsErrorResponse(
                 "При обновлении, аккаунт с таким id не найден!",
                 System.currentTimeMillis()
@@ -87,7 +87,7 @@ public class handlerAdvice {
      * @return объект типа {@link ResponseEntity}, в теле которого содержится объект класса {@link AuditErrorResponse} и HTTP статус NOT_FOUND
      */
     @ExceptionHandler
-    private ResponseEntity<AuditErrorResponse> handleException(AuditNotFoundException e) {
+    public ResponseEntity<AuditErrorResponse> handleException(AuditNotFoundException e) {
         AuditErrorResponse response = new AuditErrorResponse(
                 "Запись аудирования с таким id не найдена!",
                 System.currentTimeMillis()
@@ -103,7 +103,7 @@ public class handlerAdvice {
      * @return объект типа {@link ResponseEntity}, в теле которого содержится объект класса {@link AuditErrorResponse} и HTTP статус BAD_REQUEST
      */
     @ExceptionHandler
-    private ResponseEntity<AuditErrorResponse> handleException(AuditNotCreatedException e) {
+    public ResponseEntity<AuditErrorResponse> handleException(AuditNotCreatedException e) {
         AuditErrorResponse response = new AuditErrorResponse(
                 e.getMessage(),
                 System.currentTimeMillis()
@@ -119,7 +119,7 @@ public class handlerAdvice {
      * @return объект типа {@link ResponseEntity}, в теле которого содержится объект класса {@link AuditErrorResponse} и HTTP статус BAD_REQUEST
      */
     @ExceptionHandler
-    private ResponseEntity<AuditErrorResponse> handleException(AuditNotUpdateException e) {
+    public ResponseEntity<AuditErrorResponse> handleException(AuditNotUpdateException e) {
         AuditErrorResponse response = new AuditErrorResponse(
                 e.getMessage(),
                 System.currentTimeMillis()
