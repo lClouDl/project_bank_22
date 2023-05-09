@@ -12,6 +12,14 @@ management:
     web:
       exposure:
         include: '*'
+# Передаем метрики в Prometheus
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+    distribution:
+      percentiles-histogram:
+        "[http.server.requests]": true
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5433/postgres
